@@ -71,7 +71,8 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
-    "drf_yasg"
+    "drf_yasg",
+    "django_filters"
 ]
 
 LOCAL_APPS = [
@@ -283,7 +284,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 100,
     # "EXCEPTION_HANDLER": "core.exception.custom_exception_handler",
-    # 'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup

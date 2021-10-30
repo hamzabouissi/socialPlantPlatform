@@ -7,13 +7,13 @@ class PlantListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Plant
-        fields = ("id", "name", "description", "image")
+        fields = ("id", "name", "description", "image", "grow_days")
 
 
 class PlantCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Plant
-        fields = ("id", "name", "description", "image")
+        fields = ("id", "name", "description", "image", "grow_days")
 
 
 

@@ -17,3 +17,4 @@ django-redis==5.0.0  # https://github.com/jazzband/django-redis
 djangorestframework==3.12.4  # https://github.com/encode/django-rest-framework
 django-cors-headers==3.8.0 # https://github.com/adamchainz/django-cors-headers
 drf-yasg==1.20.0
+django-filter==21.1
