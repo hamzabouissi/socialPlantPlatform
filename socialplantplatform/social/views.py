@@ -41,7 +41,7 @@ class PublicationViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'],filterset_class=None)
     def friends_stories(self, request, *args, **kwargs):
         queryset = Publication.objects.get_user_follows_stories(request.user)
         page = self.paginate_queryset(queryset)

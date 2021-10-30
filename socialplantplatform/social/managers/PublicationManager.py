@@ -15,3 +15,4 @@ class PublicationManager(models.QuerySet):
         users_list = user.am_follow.values_list("follow_to", flat=True)
         publications = self.filter(user__in=users_list, story=False)
         return publications
+

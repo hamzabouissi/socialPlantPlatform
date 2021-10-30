@@ -8,22 +8,36 @@ User = get_user_model()
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "email", "name", "image", "url"]
+        fields = ["id", "username", "email", "name", "image"]
 
-        extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "username"}
-        }
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["username", "email", "name","image", "password", "url"]
+        fields = ["id","username", "email", "name","image", "password",]
 
         extra_kwargs = {
-            "url": {"view_name": "api:user-detail", "lookup_field": "username"},
             'password': {'write_only': True}
         }
     def validate_password(self, value):
         password = make_password(value)
         return password
+
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
+    password = serializers.CharField()
+
+    def validate(self, attrs):
+        valid = User.objects.authenticate_user(attrs['username'], attrs['password'])
+        if not valid:
+            raise serializers.ValidationError("Username or Password may be wrong")
+        return attrs
+
+
+class ProfileSerializer(serializers.Serializer):
+    publications = serializers.IntegerField()
+    am_follow = serializers.IntegerField()
+    follow_me = serializers.IntegerField()
