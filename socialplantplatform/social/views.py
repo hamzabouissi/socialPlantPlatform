@@ -30,9 +30,10 @@ class PublicationViewSet(viewsets.ModelViewSet):
         return self.serializers_class.get(self.action, SerializerNone)
 
     def get_queryset(self):
-        if self.request.user.is_authenticated:
+        if not self.request.user.is_authenticated:
+            print("not authenticated")
             return Publication.objects.none()
-        return Publication.objects.filter(user_id=self.request.user.id)
+        return Publication.objects.filter(user=self.request.user)
 
     @action(detail=False, methods=['get'],filterset_class=None)
     def friends_publications(self, request, *args, **kwargs):
