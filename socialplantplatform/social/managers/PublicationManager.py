@@ -8,6 +8,7 @@ class PublicationManager(models.QuerySet):
 
     def get_user_follows_stories(self, user: User) -> QuerySet:
         users_list = user.am_follow.values_list("follow_to", flat=True)
+        users_list.append(user.id)
         publications = self.filter(user__in=users_list, story=True)
         return publications
 
