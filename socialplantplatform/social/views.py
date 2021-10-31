@@ -21,7 +21,8 @@ class PublicationViewSet(viewsets.ModelViewSet):
         "retrieve": PublicationListSerializer,
         "update": PublicationCreateSerializer,
         "friends_stories": PublicationStoriesListSerializer,
-        "friends_publications": FriendsPublicationListSerializer
+        "friends_publications": FriendsPublicationListSerializer,
+        "all_publications":PublicationListSerializer
     }
     filterset_class = PublicationFilter
     permission_classes = (IsAuthenticated,UserOwnPublication,)
@@ -43,6 +44,16 @@ class PublicationViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], filterset_class=None)
+    def all_publications(self, request, *args, **kwargs):
+        queryset = Publication.objects.all()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

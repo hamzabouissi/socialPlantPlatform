@@ -40,7 +40,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     @swagger_auto_schema(
         responses={status.HTTP_200_OK: UserListSerializer}
     )
-    @action(detail=False, methods=["Post"], permission_classes=(AllowAny,))
+    @action(detail=False, methods=["Post"], permission_classes=(AllowAny,),filterset_class=None)
     def login(self, request):
         ser = LoginSerializer(data=request.data)
         ser.is_valid(raise_exception=True)
@@ -50,7 +50,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     @swagger_auto_schema(
         responses={status.HTTP_200_OK: ProfileSerializer}
     )
-    @action(detail=False, methods=["Get"], permission_classes=(IsAuthenticated,))
+    @action(detail=False, methods=["Get"], permission_classes=(IsAuthenticated,),filterset_class=None)
     def my_profile(self, request):
         data = User.objects.profile_aggregate(request.user.id)
         ser = ProfileSerializer(data)
