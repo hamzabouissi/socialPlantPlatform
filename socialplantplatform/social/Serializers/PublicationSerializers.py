@@ -15,14 +15,14 @@ class InnerUserSerializer(serializers.ModelSerializer):
 class PublicationListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Publication
-        fields = ("id", "user", "title","image", "video", "story", "created_at")
+        fields = ("id", "user", "title","image", "video", "story", "sell", "quantity","expired", "created_at")
 
 
 class PublicationCreateSerializer(serializers.ModelSerializer):
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Publication
-        fields = ("id", "user", "title","image", "video", "story", "created_at")
+        fields = ("id", "user", "title","image", "video", "story", "sell", "quantity", "created_at")
 
 
 class FriendsPublicationListSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class FriendsPublicationListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publication
-        fields = ("id", "user", "title", "image", "created_at")
+        fields = ("id", "user", "title", "image", "sell", "quantity", "created_at")
 
 
 # Stories
@@ -40,4 +40,4 @@ class PublicationStoriesListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Publication
-        fields = ("id", "user", "title", "video", "created_at")
+        fields = ("id", "user", "title", "video", "sell", "quantity", "created_at")

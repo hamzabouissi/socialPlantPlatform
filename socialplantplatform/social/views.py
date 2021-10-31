@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from socialplantplatform.Base.BaseSerializers import SerializerNone
@@ -24,7 +25,7 @@ class PublicationViewSet(viewsets.ModelViewSet):
     }
     filterset_class = PublicationFilter
     queryset = Publication.objects.all()
-    permission_classes = (UserOwnPublication,)
+    permission_classes = (IsAuthenticated,UserOwnPublication,)
 
     def get_serializer_class(self):
         return self.serializers_class.get(self.action, SerializerNone)

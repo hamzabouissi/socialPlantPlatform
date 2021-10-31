@@ -5,7 +5,8 @@ from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView
-from rest_framework import viewsets, permissions
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework import viewsets, permissions, status
 from rest_framework.decorators import permission_classes, action
 from rest_framework.parsers import MultiPartParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -36,6 +37,9 @@ class UsersViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         return self.serializers_class.get(self.action, SerializerNone)
 
+    @swagger_auto_schema(
+        responses={status.HTTP_200_OK: UserListSerializer}
+    )
     @action(detail=False, methods=["Post"], permission_classes=(AllowAny,))
     def login(self, request):
         ser = LoginSerializer(data=request.data)
@@ -43,6 +47,9 @@ class UsersViewSet(viewsets.ModelViewSet):
         user = User.objects.get(username=ser.data['username'])
         return Response(UserListSerializer(user).data)
 
+    @swagger_auto_schema(
+        responses={status.HTTP_200_OK: ProfileSerializer}
+    )
     @action(detail=False, methods=["Get"], permission_classes=(IsAuthenticated,))
     def my_profile(self, request):
         data = User.objects.profile_aggregate(request.user.id)

@@ -1,5 +1,5 @@
 import uuid
-
+from datetime import datetime, timedelta
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -24,8 +24,16 @@ class Publication(BaseModel):
     image = models.ImageField(upload_to=publication_image_path_upload, null=True, blank=True)
     video = models.FileField(upload_to=publication_video_path_upload, null=True,blank=True)
     story = models.BooleanField(default=False)
+    sell = models.BooleanField(default=False)
+    quantity = models.PositiveSmallIntegerField(default=1)
 
     objects = PublicationManager.as_manager()
+
+    @property
+    def expired(self):
+        from django.utils import timezone
+        now_aware = timezone.now()
+        return now_aware-self.created_at > timedelta(2)
 
 
 class Comment(BaseModel):
