@@ -23,7 +23,7 @@ User = get_user_model()
 
 class UsersViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser,)
-    queryset = User.objects.all()
+    queryset = User.objects.filter(is_superuser=False)
     serializers_class = {
         "list": UserListSerializer,
         "create": UserCreateSerializer,
