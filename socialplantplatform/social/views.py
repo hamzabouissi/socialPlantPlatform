@@ -24,11 +24,15 @@ class PublicationViewSet(viewsets.ModelViewSet):
         "friends_publications": FriendsPublicationListSerializer
     }
     filterset_class = PublicationFilter
-    queryset = Publication.objects.all()
     permission_classes = (IsAuthenticated,UserOwnPublication,)
 
     def get_serializer_class(self):
         return self.serializers_class.get(self.action, SerializerNone)
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Publication.objects.none()
+        return Publication.objects.filter(user_id=self.request.user.id)
 
     @action(detail=False, methods=['get'],filterset_class=None)
     def friends_publications(self, request, *args, **kwargs):
