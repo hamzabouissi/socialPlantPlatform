@@ -13,6 +13,7 @@ class InnerUserSerializer(serializers.ModelSerializer):
 
 
 class PublicationListSerializer(serializers.ModelSerializer):
+    user = InnerUserSerializer()
     class Meta:
         model = Publication
         fields = ("id", "user", "title","image", "video", "story", "sell", "quantity","expired", "created_at")
