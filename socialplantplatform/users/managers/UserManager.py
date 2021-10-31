@@ -1,8 +1,9 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.models import UserManager
 
 
-class UserManager(BaseUserManager):
+class CustomUserManager(UserManager):
 
     def profile_aggregate(self, user_id: int):
         user = self.get(id=user_id)

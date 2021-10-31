@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.db import models
 
-from socialplantplatform.users.managers.UserManager import UserManager
+from socialplantplatform.users.managers.UserManager import CustomUserManager
 
 
 def user_image_path_upload(instance, filename):
@@ -21,7 +21,7 @@ class User(AbstractUser):
     image = ImageField(upload_to=user_image_path_upload, null=True, blank=True)
     first_name = None  # type: ignore
     last_name = None  # type: ignore
-    objects = UserManager()
+    objects = CustomUserManager()
 
     def get_absolute_url(self):
         """Get url for user's detail view.
